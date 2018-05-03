@@ -53,6 +53,7 @@ public class cPaciente extends cUsuario{
     private ArrayList<String> padCronic;
     /**
      * Constructor con variables de clase basicas
+     * @param User
      * @param nomPac
      * @param afiliación
      * @param idAfil
@@ -61,7 +62,12 @@ public class cPaciente extends cUsuario{
      * @param edad
      * @param sexo 
      */
-    public cPaciente(String nomPac, String afiliación, String idAfil, Long celular, String curp, int edad, char sexo) {
+    public cPaciente(cUsuario User,String nomPac, String afiliación, String idAfil, Long celular, String curp, int edad, char sexo) {
+        super.idUsuario = User.getIdUsuario();
+        super.user = User.getUser();
+        super.email = User.getEmail();
+        super.nivel = User.getNivel();
+        super.agenda = User.getAgenda();
         this.nomPac = nomPac;
         this.afiliación = afiliación;
         this.idAfil = idAfil;
@@ -88,7 +94,7 @@ public class cPaciente extends cUsuario{
             procedure.setInt(1,idUsuario);
             procedure.execute();
             sulset = procedure.getResultSet();
-            while(sulset.next()){
+            if(sulset.first()){
                 nomPac = sulset.getString("NomPac");
                 afiliación = sulset.getString("Filial");
                 idAfil = sulset.getString("NumFilial");
@@ -120,26 +126,27 @@ public class cPaciente extends cUsuario{
             Sexo char(1),
             idUsuario int(5),
             */
-        String ans = "";
+        String ans = "...";
         try {
             Conectar();
             procedure = conn.prepareCall("call RegPac(?,?,?,?,?,?,?,?)");
-            procedure.setString(1,nomPac);
-            procedure.setString(2,afiliación);
-            procedure.setString(3,idAfil);
-            procedure.setLong(4,celular);
-            procedure.setString(5,curp);
-            procedure.setInt(6,edad);
-            procedure.setString(7,String.valueOf(sexo));
-            procedure.setInt(8,idUsuario);
+            procedure.setInt(1,idUsuario);
+            procedure.setString(2,nomPac);
+            procedure.setString(3,afiliación);
+            procedure.setString(4,idAfil);
+            procedure.setLong(5,celular);
+            procedure.setString(6,curp);
+            procedure.setInt(7,edad);
+            procedure.setString(8,String.valueOf(sexo));
             procedure.execute();
             sulset = procedure.getResultSet();
-            if(sulset.isFirst()){
+            if(sulset.first()){
                 ans = sulset.getString("msj");
             }
             Cerrar();
         } catch (SQLException ex) {
             System.out.println("Error al registrar al paciente");
+            System.out.println(ex.getMessage());
         }
         return ans;
     }
@@ -157,5 +164,81 @@ public class cPaciente extends cUsuario{
     public void DelPac() {
         // TODO implement here
     }
+
+    //<editor-fold defaultstate="collapsed" desc="GETTERs">
+    public String getNomPac() {
+        return nomPac;
+    }
+    
+    public String getAfiliación() {
+        return afiliación;
+    }
+    
+    public String getIdAfil() {
+        return idAfil;
+    }
+    
+    public Long getCelular() {
+        return celular;
+    }
+    
+    public String getCurp() {
+        return curp;
+    }
+    
+    public int getEdad() {
+        return edad;
+    }
+    
+    public char getSexo() {
+        return sexo;
+    }
+    
+    public ArrayList<String> getAlergis() {
+        return alergis;
+    }
+    
+    public ArrayList<String> getPadCronic() {
+        return padCronic;
+    }
+//</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="SETTERs">
+    public void setNomPac(String nomPac) {
+        this.nomPac = nomPac;
+    }
+    
+    public void setAfiliación(String afiliación) {
+        this.afiliación = afiliación;
+    }
+    
+    public void setIdAfil(String idAfil) {
+        this.idAfil = idAfil;
+    }
+    
+    public void setCelular(Long celular) {
+        this.celular = celular;
+    }
+    
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+    
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+    
+    public void setAlergis(ArrayList<String> alergis) {
+        this.alergis = alergis;
+    }
+    
+    public void setPadCronic(ArrayList<String> padCronic) {
+        this.padCronic = padCronic;
+    }
+//</editor-fold>
 
 }
