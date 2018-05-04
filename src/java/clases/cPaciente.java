@@ -116,16 +116,18 @@ public class cPaciente extends cUsuario{
      * @return
      */
     public String RegPac() {
+        //<editor-fold defaultstate="collapsed" desc="CamposDB">
         /*idPac int(5) primary key not null,
-            Nombre varchar(30),
-            Afiliacion varchar(20),
-            IDAfiliado varchar(30),
-            Celular long,
-            CURP varchar(18),
-            Edad int(3),
-            Sexo char(1),
-            idUsuario int(5),
-            */
+        Nombre varchar(30),
+        Afiliacion varchar(20),
+        IDAfiliado varchar(30),
+        Celular long,
+        CURP varchar(18),
+        Edad int(3),
+        Sexo char(1),
+        idUsuario int(5),
+        */
+//</editor-fold>
         String ans = "...";
         try {
             Conectar();

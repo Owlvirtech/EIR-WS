@@ -117,6 +117,27 @@ public class cUsuario extends cBDatos{
         }
         return ans;
     }
+    public String ModUsr(String Contra){
+        String ans="";
+        try {
+            Conectar();
+            procedure = conn.prepareCall("call ModUser(?,?,?,?)");
+            procedure.setInt(1,idUsuario);
+            procedure.setString(2,user);
+            procedure.setString(3,email);
+            procedure.setString(4,Contra);
+            procedure.execute();
+            sulset = procedure.getResultSet();
+            if(sulset.first()){
+                ans = sulset.getString("msj");
+            }
+            Cerrar();
+        } catch (SQLException ex) {
+            System.out.println("Error al modificar usuario");
+            System.out.println(ex.getMessage());
+        }
+        return ans;
+    }
 
     //<editor-fold defaultstate="collapsed" desc="GETTERs">
     public int getIdUsuario() {
