@@ -95,8 +95,8 @@ public class cUsuario extends cBDatos{
         agenda = new cAgenda(idUsuario);
     }
     
-    public void AgendaCita(String Fecha,String Hora,int Clinica){
-        
+    public String AgendaCita(String Fecha,String Hora,int Clinica){
+        return agenda.RegCita(Fecha, Hora, Clinica,user);
     }
     
     public String RegUsr(String Contra){

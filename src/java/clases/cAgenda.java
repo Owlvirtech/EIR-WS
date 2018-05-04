@@ -32,7 +32,7 @@ public class cAgenda extends cBDatos {
             }
             Cerrar();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener citas del usuario");
+            System.out.println("Error al obtener citas (int) del usuario");
             System.out.println(ex.getMessage());
         }
     }
@@ -47,20 +47,35 @@ public class cAgenda extends cBDatos {
     }
 
     /**
-     * @param idUsuario
-     * @return
-     */
-    public ArrayList<String> GetCitas(int idUsuario) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
      * @return
      */
     public ArrayList<String> GetCitas() {
         // TODO implement here
         return null;
+    }
+
+    /**
+     * @param idUsuario
+     * @return
+     */
+    public ArrayList<String> GetCitas(int idUsuario) {
+        ArrayList<String> cits = new ArrayList<>();
+        String temp = "";
+        try {
+            Conectar();
+            procedure = conn.prepareCall("call GetCitasUser(?)");
+            procedure.setInt(1,idUsuario);
+            procedure.execute();
+            sulset = procedure.getResultSet();
+            while(sulset.next()){
+                cits.add(sulset.getString(1)+","+sulset.getString(2)+","+sulset.getString(3)+","+sulset.getString(4)+","+sulset.getString(5)+",");
+            }
+            Cerrar();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener citas (string) del usuario");
+            System.out.println(ex.getMessage());
+        }
+        return cits;
     }
 
     /**
@@ -126,6 +141,7 @@ public class cAgenda extends cBDatos {
                     }    
                 }
                 else{
+                    ans = "Sin disponibilidad";
                 }
                 
             }
