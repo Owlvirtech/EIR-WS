@@ -13,7 +13,7 @@ public class cUsuario extends cBDatos{
     /**
      * Agenda con las citas del usuario
      */
-    protected cAgenda agenda;
+    protected transient cAgenda agenda;
     /**
      * Nombre de usuario
      */

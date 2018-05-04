@@ -68,25 +68,66 @@ public class cAgenda extends cBDatos {
      * (Incompleto)
      * @param Fech formato year-month-day
      * @param Hora
+     * @param Clinica
+     * @param IdUser
      * @return
      */
     public String RegCita(String Fech,String Hora,int Clinica,String IdUser) {
-        GregorianCalendar cal = new GregorianCalendar();
-        String[] datosFech = Fech.split("-");
-	cal.setTime(new Date(Integer.parseInt(datosFech[0]),Integer.parseInt(datosFech[1]),Integer.parseInt(datosFech[2])));
-	int dia = cal.get(Calendar.DAY_OF_WEEK);//1=Domingo 2=Lunes
         String ans="";
+        String nombreDia = "";
         try {
             Conectar();
-            procedure = conn.prepareCall("call RegCita(?,?,?,?)");
-            procedure.setString(1,IdUser);
-            procedure.setString(2,Fech);
-            procedure.setString(3,Hora);
-            procedure.setInt(4,Clinica);
+            GregorianCalendar cal = new GregorianCalendar();
+            String[] datosFech = Fech.split("-");
+            cal.setTime(new Date(Integer.parseInt(datosFech[0]),Integer.parseInt(datosFech[1]),Integer.parseInt(datosFech[2])));
+            int dia = cal.get(Calendar.DAY_OF_WEEK);//1=Domingo 2=Lunes
+            switch (dia){
+               case 1: nombreDia = "Domingo";
+                break;
+               case 2: nombreDia = "Lunes";
+                break;
+               case 3: nombreDia = "Martes";
+                break;
+               case 4: nombreDia = "Miercoles";
+                break;
+               case 5: nombreDia = "Jueves";
+                break;
+               case 6: nombreDia = "Viernes";
+                break;
+               case 7: nombreDia = "Sabado";
+                break;
+            }
+            procedure = conn.prepareCall("select "+nombreDia+",MedID from horariosmedicos where idClini = "+Clinica+" ");
+            
             procedure.execute();
             sulset = procedure.getResultSet();
-            if(sulset.first()){
-                ans = sulset.getString("msj");
+            while(sulset.next()){
+               String ans1 = sulset.getString(1);
+               
+                String [] hora = ans1.split("-");
+                String [] hora1 = hora[0].split(":");
+                String [] hora2 = hora[1].split(":");
+                String [] horaTraida = Hora.split(":");
+                
+                int horaBuena1 = Integer.parseInt(hora1[0]);
+                int horaBuena2 = Integer.parseInt(hora2[0]);
+                int horaChida = Integer.parseInt(horaTraida[0]);
+                int doc = sulset.getInt(2);
+                if(horaBuena1<horaChida && horaBuena2>horaChida ){
+                    procedure = conn.prepareCall("call RegCita(?,?,?,?)");
+                    procedure.setString(1,IdUser);
+                    procedure.setString(2,Fech);
+                    procedure.setString(3,Hora);
+                    procedure.setInt(4,doc);
+                    procedure.execute();
+                    sulset = procedure.getResultSet();
+                    if(sulset.first()){
+                        ans = sulset.getString("msj");
+                    }    
+                }
+                else{
+                }
+                
             }
             Cerrar();
         } catch (SQLException ex) {

@@ -38,7 +38,7 @@ public class wbAcceso {
                         return gson.toJson("Building");
                     case 3:
                         //Si es paciente
-                        return gson.toJson(new cPaciente(user));
+                        return gson.toJson(user);
                     default:
                         return gson.toJson("Nivel desconocido");
                 }

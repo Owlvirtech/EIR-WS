@@ -16,11 +16,11 @@ import java.sql.Statement;
  * @author angelraymundo
  */
 public class cBDatos {
-    private String usrBD,passBD,urlBD, driverClassName;
-    protected Connection conn = null;
-    protected Statement estancia = null;
-    protected CallableStatement procedure = null;
-    protected ResultSet sulset=null;
+    private transient String usrBD,passBD,urlBD, driverClassName;
+    protected transient Connection conn = null;
+    protected transient Statement estancia = null;
+    protected transient CallableStatement procedure = null;
+    protected transient ResultSet sulset=null;
     
  
     public cBDatos(String usuarioBD, String passwordBD, String url, String driverClassName) {
