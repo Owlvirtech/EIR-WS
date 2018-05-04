@@ -43,7 +43,35 @@ public class wbPacManager {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegPac(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
+    public String RegPacForm(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
+                        @FormParam("cel")String Cel,@FormParam("curp")String Curp,@FormParam("edad")String Edad,@FormParam("sex")String Sexo){
+        cUsuario user = new cUsuario();
+        if(user.Encuentra(Usr)){
+            cPaciente pac = new cPaciente(user, NomPac, Filial, NumFil,Long.parseLong(Cel), Curp,Integer.parseInt(Edad), Sexo.charAt(0));
+            String msj = pac.RegPac();
+            return gson.toJson(msj);
+        }else{
+            return gson.toJson("No existe el usuario");
+        }
+    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String RegPacJson(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
+                        @FormParam("cel")String Cel,@FormParam("curp")String Curp,@FormParam("edad")String Edad,@FormParam("sex")String Sexo){
+        cUsuario user = new cUsuario();
+        if(user.Encuentra(Usr)){
+            cPaciente pac = new cPaciente(user, NomPac, Filial, NumFil,Long.parseLong(Cel), Curp,Integer.parseInt(Edad), Sexo.charAt(0));
+            String msj = pac.RegPac();
+            return gson.toJson(msj);
+        }else{
+            return gson.toJson("No existe el usuario");
+        }
+    }
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String RegPacPlain(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
                         @FormParam("cel")String Cel,@FormParam("curp")String Curp,@FormParam("edad")String Edad,@FormParam("sex")String Sexo){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){

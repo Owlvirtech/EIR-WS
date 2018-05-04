@@ -22,9 +22,25 @@ import javax.ws.rs.core.MediaType;
 public class wbUserManager {
     Gson gson = new Gson();
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String RegistrarUserPlain(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+        System.out.println(User+", "+Mail+", "+Pass+", "+Niv);
+        cUsuario user = new cUsuario(User,Mail,Integer.parseInt(Niv));
+        return gson.toJson(user.RegUsr(Pass));
+    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistrarUser(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+    public String RegistrarUserJson(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+        System.out.println(User+", "+Mail+", "+Pass+", "+Niv);
+        cUsuario user = new cUsuario(User,Mail,Integer.parseInt(Niv));
+        return gson.toJson(user.RegUsr(Pass));
+    }
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String RegistrarUserForm(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
         System.out.println(User+", "+Mail+", "+Pass+", "+Niv);
         cUsuario user = new cUsuario(User,Mail,Integer.parseInt(Niv));
         return gson.toJson(user.RegUsr(Pass));
