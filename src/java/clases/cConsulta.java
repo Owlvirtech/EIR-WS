@@ -22,7 +22,7 @@ public class cConsulta {
     /**
      * 
      */
-    private cDoctor doc;
+    private cMedico doc;
 
     /**
      * 

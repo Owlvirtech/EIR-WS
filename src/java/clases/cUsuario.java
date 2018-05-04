@@ -91,6 +91,14 @@ public class cUsuario extends cBDatos{
         return ok;
     }
     
+    public void GeneraAgenda(){
+        agenda = new cAgenda(idUsuario);
+    }
+    
+    public void AgendaCita(String Fecha,String Hora,int Clinica){
+        
+    }
+    
     public String RegUsr(String Contra){
         String ans="";
         try {

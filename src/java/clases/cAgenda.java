@@ -20,7 +20,7 @@ public class cAgenda extends cBDatos {
     /**
      * @param idUsuario
      */
-    public void cAgenda(int idUsuario) {
+    public cAgenda(int idUsuario) {
         try {
             Conectar();
             procedure = conn.prepareCall("call GetCitasUser(?)");
@@ -66,27 +66,27 @@ public class cAgenda extends cBDatos {
     /**
      * Metodo para registrar una cita
      * (Incompleto)
-     * @param Fech
+     * @param Fech formato year-month-day
      * @param Hora
      * @return
      */
-    public String RegCita(String Fech, int Hora,String IdUser) {
+    public String RegCita(String Fech,String Hora,int Clinica,String IdUser) {
+        GregorianCalendar cal = new GregorianCalendar();
+        String[] datosFech = Fech.split("-");
+	cal.setTime(new Date(Integer.parseInt(datosFech[0]),Integer.parseInt(datosFech[1]),Integer.parseInt(datosFech[2])));
+	int dia = cal.get(Calendar.DAY_OF_WEEK);//1=Domingo 2=Lunes
         String ans="";
         try {
             Conectar();
             procedure = conn.prepareCall("call RegCita(?,?,?,?)");
             procedure.setString(1,IdUser);
             procedure.setString(2,Fech);
-            procedure.setInt(3,Hora);
+            procedure.setString(3,Hora);
+            procedure.setInt(4,Clinica);
             procedure.execute();
             sulset = procedure.getResultSet();
             if(sulset.first()){
-                int Num = sulset.getInt("id");
-                if(Num!=0){
-                    ans="Registrado";
-                }else{
-                    ans="Ya existe";
-                }
+                ans = sulset.getString("msj");
             }
             Cerrar();
         } catch (SQLException ex) {
