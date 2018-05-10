@@ -29,19 +29,7 @@ public class wbAcceso {
         cUsuario user = new cUsuario();
         if(user.Encuentra(User)){
             if(user.ValidaA(Pass)){
-                switch (user.getNivel()) {
-                    case 1:
-                        // Si es director de la clinica
-                        return gson.toJson("Building");
-                    case 2:
-                        // Si es médico
-                        return gson.toJson("Building");
-                    case 3:
-                        //Si es paciente
-                        return gson.toJson(user);
-                    default:
-                        return gson.toJson("Nivel desconocido");
-                }
+                return gson.toJson(user);
             }else{
                 return gson.toJson("Invalido");
             }

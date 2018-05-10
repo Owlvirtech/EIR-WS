@@ -87,7 +87,7 @@ public class cMedico extends cUsuario{
      * Constructor a partir de un usuario
      * @param User
      */
-    public void cMedico(cUsuario User) {
+    public cMedico(cUsuario User) {
         super.idUsuario = User.getIdUsuario();
         super.user = User.getUser();
         super.email = User.getEmail();
