@@ -31,7 +31,7 @@ public class cClinica extends cUsuario{
      * 
      */
     private String nomRep;
-
+    private String rfc;
     /**
      * 
      */
@@ -65,6 +65,7 @@ public class cClinica extends cUsuario{
                 nomRep = sulset.getString(2);
                 telefono = sulset.getLong(3);
                 direccion = sulset.getString(4);
+                rfc = sulset.getString(5);
             }
             Cerrar();
         } catch (SQLException ex) {
@@ -72,7 +73,7 @@ public class cClinica extends cUsuario{
         }
     }
     
-    public cClinica(cUsuario User,String nomClinic, String direccion, String nomRep, Long telefono) {
+    public cClinica(cUsuario User,String nomClinic, String direccion, String nomRep,String rfcP, Long telefono) {
         super.idUsuario = User.getIdUsuario();
         super.user = User.getUser();
         super.email = User.getEmail();
@@ -83,6 +84,7 @@ public class cClinica extends cUsuario{
         this.direccion = direccion;
         this.nomRep = nomRep;
         this.telefono = telefono;
+        this.rfc = rfcP;
     }
     
     
@@ -107,12 +109,13 @@ public class cClinica extends cUsuario{
         try {
             procedure.execute();
             //Procedimiento para registrar la clinica
-            procedure = conn.prepareCall("call RegClinic(?,?,?,?,?)");
+            procedure = conn.prepareCall("call RegClinic(?,?,?,?,?,?)");
             procedure.setInt(1,idUsuario);
             procedure.setString(2,nomClinic);
             procedure.setString(3,nomRep);
-            procedure.setLong(4,telefono);
-            procedure.setString(5, direccion);
+            procedure.setString(4,rfc);
+            procedure.setLong(5,telefono);
+            procedure.setString(6, direccion);
             procedure.execute();
             sulset = procedure.getResultSet();
             if(sulset.first()){
