@@ -5,8 +5,10 @@
  */
 package WebServiceClases;
 
+import clases.cServHandler;
 import clases.cUsuario;
 import com.google.gson.Gson;
+import java.io.IOException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -22,14 +24,33 @@ import javax.ws.rs.core.MediaType;
 @Path("/wbUsr")
 public class wbUserManager {
     Gson gson = new Gson();
-    
+    cServHandler serv = new cServHandler();
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    //@Consumes(MediaType.TEXT_PLAIN)
-    //@Consumes(MediaType.APPLICATION_JSON)
-    //@Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_HTML)
+    public String RegistrarUserHTML(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+        if(Niv.equals("Paciente")){
+            Niv="3";
+        }else if(Niv.equals("Médico")){
+            Niv="2";
+        }else if(Niv.equals("Consultorio")){
+            Niv="1";
+        }
+        cUsuario user = new cUsuario(User,Mail,Integer.parseInt(Niv));
+        String msj = user.RegUsr(Pass);
+        return "<script>alert('"+msj+"');location.href='"+serv.getClientURL()+"/index.html'</script>";
+    }
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistrarUserForm(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+    public String RegistrarUserJSON(@FormParam("usr") String User,@FormParam("eml") String Mail,@FormParam("psw") String Pass,@FormParam("lvl") String Niv){
+        if(Niv.equals("Paciente")){
+            Niv="3";
+        }else if(Niv.equals("Médico")){
+            Niv="2";
+        }else if(Niv.equals("Consultorio")){
+            Niv="1";
+        }
         cUsuario user = new cUsuario(User,Mail,Integer.parseInt(Niv));
         return gson.toJson(user.RegUsr(Pass));
     }
