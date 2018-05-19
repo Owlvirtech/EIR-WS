@@ -48,11 +48,11 @@ public class wbAcceso {
             if(user.ValidaA(Pass)){
                 switch (user.getNivel()) {
                     case 1:
-                        return "<script>location.href='"+serv.getClientURL()+"/Consultorio/perfilClinica.jsp'</script>";
+                        return "<script>location.href='"+serv.getClientURL()+"/Consultorio/perfilClinica.jsp?usr="+user.getUser()+"'</script>";
                     case 2:
-                        return "<script>location.href='"+serv.getClientURL()+"/Doctor/perfilMedico.jsp'</script>";
+                        return "<script>location.href='"+serv.getClientURL()+"/Doctor/perfilMedico.jsp?usr="+user.getUser()+"'</script>";
                     case 3:
-                        return "<script>location.href='"+serv.getClientURL()+"/Paciente/perfilPaciente.jsp'</script>";
+                        return "<script>location.href='"+serv.getClientURL()+"/Paciente/perfilPaciente.jsp?usr="+user.getUser()+"'</script>";
                     default:
                         return "<script>alert('invalido');location.href='"+serv.getClientURL()+"/index.html'</script>";
                 }

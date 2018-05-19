@@ -15,6 +15,7 @@ public class cClinica extends cUsuario{
      * Default constructor
      */
     public cClinica() {
+        super();
     }
 
     /**
@@ -40,7 +41,7 @@ public class cClinica extends cUsuario{
     /**
      * 
      */
-    private cBitacora bitacora;
+    transient private cBitacora bitacora;
 
 
     /**
@@ -48,6 +49,7 @@ public class cClinica extends cUsuario{
      * @return
      */
     public cClinica(cUsuario User) {
+        super();
         super.idUsuario = User.getIdUsuario();
         super.user = User.getUser();
         super.email = User.getEmail();
@@ -70,10 +72,12 @@ public class cClinica extends cUsuario{
             Cerrar();
         } catch (SQLException ex) {
             System.out.println("Error al buscar la clinica (from user)");
+            System.out.println(ex.getMessage());
         }
     }
     
     public cClinica(cUsuario User,String nomClinic, String direccion, String nomRep,String rfcP, Long telefono) {
+        super();
         super.idUsuario = User.getIdUsuario();
         super.user = User.getUser();
         super.email = User.getEmail();
@@ -107,7 +111,7 @@ public class cClinica extends cUsuario{
 //</editor-fold>
         String ans="...";
         try {
-            procedure.execute();
+            Conectar();
             //Procedimiento para registrar la clinica
             procedure = conn.prepareCall("call RegClinic(?,?,?,?,?,?)");
             procedure.setInt(1,idUsuario);
@@ -163,6 +167,11 @@ public class cClinica extends cUsuario{
     public void setBitacora(cBitacora bitacora) {
         this.bitacora = bitacora;
     }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+    
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="GETTERs">
@@ -185,6 +194,9 @@ public class cClinica extends cUsuario{
     public cBitacora getBitacora() {
         return bitacora;
     }
+    public String getRfc() {
+        return rfc;
+    }
+    
 //</editor-fold>
-
 }

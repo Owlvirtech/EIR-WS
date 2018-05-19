@@ -31,15 +31,18 @@ public class cUsuario extends cBDatos{
      * Default constructor
      */
     public cUsuario() {
+        super();
     }
     /**
      * @param idUser
      */
     public cUsuario(int idUser) {
+        super();
         // TODO implement here
     }
 
     public cUsuario(String user, String email, int nivel) {
+        super();
         this.user = user;
         this.email = email;
         this.nivel = nivel;
@@ -55,7 +58,7 @@ public class cUsuario extends cBDatos{
             sulset = procedure.getResultSet();
             if(sulset.first()){
                 idUsuario = sulset.getInt("idUsuario");
-                user = User;
+                user = sulset.getString("Usuario");
                 nivel = sulset.getInt("Nivel");
                 email = sulset.getString("Correo");
                 ok=true;
