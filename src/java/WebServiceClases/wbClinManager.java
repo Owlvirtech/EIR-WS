@@ -31,7 +31,7 @@ public class wbClinManager {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{usr}")
-    public String ObtenClinica(@PathParam("usr") String Usr){
+    public String ObtenClinicaJSON(@PathParam("usr") String Usr){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){
             cClinica cli = new cClinica(user);
@@ -47,7 +47,7 @@ public class wbClinManager {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegClinica(@FormParam("usr") String Usr,@FormParam("nomC") String NomCli,@FormParam("dir") String Direc,
+    public String RegClinicaJSON(@FormParam("usr") String Usr,@FormParam("nomC") String NomCli,@FormParam("dir") String Direc,
                                 @FormParam("nomR") String NomRep,@FormParam("rfc") String RFC,@FormParam("tel") Long Tel){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){

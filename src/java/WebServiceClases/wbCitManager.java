@@ -27,7 +27,7 @@ public class wbCitManager {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{usr}")
-    public String ObtenCitasUsr(@PathParam("usr") String Usr){
+    public String ObtenCitasUsrJSON(@PathParam("usr") String Usr){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){
             user.GeneraAgenda();
@@ -40,7 +40,7 @@ public class wbCitManager {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistraCita(@FormParam("usr")String User,@FormParam("fech")String Fecha,@FormParam("hora")String Hora,@FormParam("clin")String Clini){
+    public String RegistraCitaJSON(@FormParam("usr")String User,@FormParam("fech")String Fecha,@FormParam("hora")String Hora,@FormParam("clin")String Clini){
         cUsuario usr = new cUsuario();
         if(usr.Encuentra(User)){
             usr.GeneraAgenda();

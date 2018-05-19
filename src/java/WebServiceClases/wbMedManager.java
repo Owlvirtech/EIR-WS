@@ -27,7 +27,7 @@ public class wbMedManager {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{usr}")
-    public String ObtenMedico(@PathParam("usr") String Usr){
+    public String ObtenMedicoJSON(@PathParam("usr") String Usr){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){
             cMedico med = new cMedico(user);
@@ -45,7 +45,7 @@ public class wbMedManager {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     //@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistraMedico(@FormParam("usr") String Usr,@FormParam("nomM")String NomMed,@FormParam("ced")String Cedula,@FormParam("dir")String Direc,
+    public String RegistraMedicoJSON(@FormParam("usr") String Usr,@FormParam("nomM")String NomMed,@FormParam("ced")String Cedula,@FormParam("dir")String Direc,
                         @FormParam("esp")String Especiali,@FormParam("cel")String Cel,@FormParam("sex")String Sexo,@FormParam("clin")String Clin, @FormParam("diahors")String DiaHors){
         cUsuario user = new cUsuario();
         String[] horario = DiaHors.split(",");

@@ -27,7 +27,7 @@ public class wbPacManager {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{usr}")
-    public String ObtenPac(@PathParam("usr") String Usr){
+    public String ObtenPacJSON(@PathParam("usr") String Usr){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){
             cPaciente pac = new cPaciente(user);
@@ -45,7 +45,7 @@ public class wbPacManager {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     //@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistraPac(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
+    public String RegistraPacJSON(@FormParam("usr") String Usr,@FormParam("nomP")String NomPac,@FormParam("fil")String Filial,@FormParam("numFil")String NumFil,
                         @FormParam("cel")String Cel,@FormParam("curp")String Curp,@FormParam("edad")String Edad,@FormParam("sex")String Sexo){
         cUsuario user = new cUsuario();
         if(user.Encuentra(Usr)){

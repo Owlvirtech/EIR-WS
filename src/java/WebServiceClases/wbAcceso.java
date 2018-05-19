@@ -5,6 +5,7 @@
 package WebServiceClases;
 
 import clases.cPaciente;
+import clases.cServHandler;
 import clases.cUsuario;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -22,10 +23,11 @@ import javax.ws.rs.FormParam;
 @Path("/wbAcs")
 public class wbAcceso {
     Gson gson = new Gson();
+    cServHandler serv = new cServHandler();
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String ValidaAcceso(@FormParam("usr")String User,@FormParam("psw")String Pass){
+    public String ValidaAccesoJSON(@FormParam("usr")String User,@FormParam("psw")String Pass){
         cUsuario user = new cUsuario();
         if(user.Encuentra(User)){
             if(user.ValidaA(Pass)){
@@ -35,6 +37,30 @@ public class wbAcceso {
             }
         }else{
             return gson.toJson("Invalido");
+        }
+    }
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String ValidaAccesoHTML(@FormParam("usr")String User,@FormParam("psw")String Pass){
+        cUsuario user = new cUsuario();
+        if(user.Encuentra(User)){
+            if(user.ValidaA(Pass)){
+                switch (user.getNivel()) {
+                    case 1:
+                        return "<script>location.href='"+serv.getClientURL()+"/Consultorio/perfilClinica.jsp'</script>";
+                    case 2:
+                        return "<script>location.href='"+serv.getClientURL()+"/Doctor/perfilMedico.jsp'</script>";
+                    case 3:
+                        return "<script>location.href='"+serv.getClientURL()+"/Paciente/perfilPaciente.jsp'</script>";
+                    default:
+                        return "<script>alert('invalido');location.href='"+serv.getClientURL()+"/index.html'</script>";
+                }
+            }else{
+                return "<script>alert('invalido');location.href='"+serv.getClientURL()+"/index.html'</script>";
+            }
+        }else{
+            return "<script>alert('invalido');location.href='"+serv.getClientURL()+"/index.html'</script>";
         }
     }
 }
